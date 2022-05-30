@@ -3,21 +3,22 @@ const layout = require("../layout");
 
 function get(request, response) {
 try {
-    const postsForm = /*html*/
-    response.send(layout(postsForm,
+    response.send(layout("postsForm",
         `
+    <h1> Upload Your File</h1>
     <form enctype="multipart/form-data" class="Upload File" id="upload-file" action="/post" method="POST">
     <div>
-      <label for="title">Title:</label>
+      <label for="title">Title:<span aria-hidden="true">*</span></label>
       <input type="text" id="title" placeholder="Title" name="title" >
       </div>
       <br>
-      <label for="alt_text">Alt Text:</label>
+      <label for="alt_text">Alt Text:<span aria-hidden="true">*</span></label>
       <input type="text" id="alt_text" placeholder="Alt Text" name="alt_text" >
       </div>
       <br>  
+      <br>
       <div>
-      <label for="file">Upload File:</label>
+      <label for="file">Upload File:<span aria-hidden="true">*</span></label>
       <input type="file" id="file" placeholder="Upload File" name="file" >
       </div>
       <br>  
