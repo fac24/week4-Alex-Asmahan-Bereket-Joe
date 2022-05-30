@@ -1,5 +1,5 @@
 function layout(title, content) {
-    return /*html*/ `<!DOCTYPE html>
+  return /*html*/ `<!DOCTYPE html>
   <html lang="en">
   <head>
     <meta charset="UTF-8">
@@ -9,11 +9,23 @@ function layout(title, content) {
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    ${content}
+
+    <div id="everything">
+
+      <header>
+        <!-- username and optional logout button -->
+        <!-- username | <a href="/logout">Log out</a> -->
+      </header>
+
+      <main>
+        ${content}
+      </main>
+
+    </div>
+
   </body>
   </html>
     `;
 }
 
 module.exports = layout;
-
