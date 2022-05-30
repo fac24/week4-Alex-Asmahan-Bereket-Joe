@@ -20,11 +20,10 @@ function get(req, res) {
 
 function post(req, res) {
   const { username, password } = req.body;
-  console.log(username);
-  console.log(password);
   auth
     .verifyUser(username, password)
     .then((verification) => {
+      console.log(26 + verification);
       if (verification === false) {
         throw new Error();
       } else {
