@@ -1,16 +1,18 @@
-const db = require("/database/model.js");
+const model = require("../database/model");
+const layout = require("../layout");
 
 function get(request, response) {
 try {
     const postsForm = /*html*/
-`
-    <form enctype="multipart/form-data class="Upload File" id="upload-file" action="/post" method="POST">
+    response.send(layout(postsForm,
+        `
+    <form enctype="multipart/form-data" class="Upload File" id="upload-file" action="/post" method="POST">
     <div>
-      <label for="Title">Title:</label>
+      <label for="title">Title:</label>
       <input type="text" id="title" placeholder="Title" name="title" >
       </div>
       <br>
-      <label for="alt-text">Alt Text:</label>
+      <label for="alt_text">Alt Text:</label>
       <input type="text" id="alt_text" placeholder="Alt Text" name="alt_text" >
       </div>
       <br>  
@@ -21,8 +23,7 @@ try {
       <br>  
       <button class="link-as-button submit-button" type="Submit" value="Submit" aria-label="Submit Your Post">Submit</button>
     </form>
-    `;
-    response.send(postsForm);
+    `))
 } catch (error) {
     console.error(error);
     response.status(500).send(`<h1>Error</h1>`)
@@ -31,7 +32,7 @@ try {
 
     function post(request, response) {
         const {title, alt_text, image} = sanitize(request.body);
-        model
+        return model
         .createPost(title, alt_text, image)
         .then(() => {
             response.redirect("/posts")
@@ -42,4 +43,4 @@ try {
         });
     };
 
-    module.exports(get, post)
+    module.exports = {get, post}
