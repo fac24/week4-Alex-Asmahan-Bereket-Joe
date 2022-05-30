@@ -1,6 +1,6 @@
 const layout = require("../layout");
 
-const get = (req, res) => {
+function get(req, res) {
   res.send(
     layout(
       `login`,
@@ -15,7 +15,7 @@ const get = (req, res) => {
     </form>`
     )
   );
-};
+}
 
 function post(req, res) {
   const { username, password } = req.body;
@@ -39,7 +39,7 @@ function post(req, res) {
         .send(
           layout(
             `Error`,
-            `<h1 class="error-message"> SOmething went wrong</h1></h1>`
+            `<h1 class="error-message"> Something went wrong</h1></h1>`
           )
         );
     });
