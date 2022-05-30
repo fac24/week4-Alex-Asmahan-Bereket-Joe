@@ -28,6 +28,6 @@ server.post("/login", login.post);
 server.post("/logout", logout.post);
 
 
-const PORT = process.env.PORT || 3333;
+const PORT = process.env.PORT || 3000;
 
 server.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));
