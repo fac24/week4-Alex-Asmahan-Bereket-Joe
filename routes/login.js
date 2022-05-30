@@ -1,4 +1,5 @@
 const layout = require("../layout");
+const auth = require("../auth");
 
 function get(req, res) {
   res.send(
@@ -19,7 +20,8 @@ function get(req, res) {
 
 function post(req, res) {
   const { username, password } = req.body;
-
+  console.log(username);
+  console.log(password);
   auth
     .verifyUser(username, password)
     .then((verification) => {
