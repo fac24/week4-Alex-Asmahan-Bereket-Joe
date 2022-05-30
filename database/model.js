@@ -8,8 +8,7 @@ function createUser(username, password) {
 };
 
 function getUser(username) {
-    console.log(11 + username);
-    const GET_USER = `SELECT * FROM users WHERE users.id = $1`;
+    const GET_USER = `SELECT * FROM users WHERE username = $1`;
     return db
         .query(GET_USER, [username])
         .then((result) => result.rows[0]);
