@@ -12,10 +12,6 @@ function layout(title, content) {
 
     <div id="everything">
 
-      <!-- <header>
-        username | <a href="/logout">Log out</a>
-      </header> -->
-
       <main>
         ${content}
       </main>
