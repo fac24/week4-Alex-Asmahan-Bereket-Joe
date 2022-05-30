@@ -1,4 +1,4 @@
-const db = require("./connections.js");
+const db = require("./connections");
 
 function createUser(username, password) {
     const CREATE_USER = `INSERT INTO users (username, password) VALUES ($1, $2)`;
