@@ -22,6 +22,15 @@ CREATE TABLE sessions (
 );
 
 INSERT INTO users (username, password) VALUES
-('imager', '123');
+    ('Alex', 'pass123'),
+    ('Asmahan', 'pass123'),
+    ('Bereket', 'pass123'),
+    ('Joe', 'pass123');
+
+INSERT INTO posts (user_id, title, alt_text) VALUES
+    (1, 'Test 1', 'My alt text'),
+    (2, 'Test 2', 'Helpful alt text'),
+    (3, 'Test 3', 'More alt text'),
+    (4, 'Test 4', 'Alt text');
 
 COMMIT;
