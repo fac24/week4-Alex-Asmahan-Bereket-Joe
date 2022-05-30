@@ -1,5 +1,6 @@
 const model = require("../database/model");
 const layout = require("../layout");
+const auth = require("../auth");
 
 function get(req, res) {
     res.send(layout("Sign Up", /*html*/ `
@@ -18,7 +19,7 @@ function post(req, res) {
     const { username, password } = req.body;
     console.log(username);
     console.log(password);
-    return model.createUser(username, password)
+    return auth.createUser(username, password)
         .then((result) => {
             console.log(result)
         })
