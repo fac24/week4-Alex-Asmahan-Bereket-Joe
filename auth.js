@@ -11,8 +11,11 @@ const COOKIE_OPTIONS = {
 };
 
 function verifyUser(username, password) {
+    console.log(14 + username);
+    console.log(15 + password);
     return model.getUser(username)
         .then((user) => {
+            console.log(user);
             if (user === undefined) {
                 console.error("No such user");
                 return false;
