@@ -1,7 +1,11 @@
 name: Cypress
 
 # Will run on *any* push
-on: [push]
+# on: [push]
+on:
+  push:
+    branches:
+      - "github-actions-trigger-test"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
