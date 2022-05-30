@@ -12,10 +12,9 @@ function layout(title, content) {
 
     <div id="everything">
 
-      <header>
-        <!-- username and optional logout button -->
-        <!-- username | <a href="/logout">Log out</a> -->
-      </header>
+      <!-- <header>
+        username | <a href="/logout">Log out</a>
+      </header> -->
 
       <main>
         ${content}
