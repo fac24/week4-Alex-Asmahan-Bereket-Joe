@@ -16,4 +16,3 @@ function layout(title, content) {
 }
 
 module.exports = layout;
-

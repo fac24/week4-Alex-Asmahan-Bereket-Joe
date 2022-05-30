@@ -12,5 +12,28 @@ const get = (req, res) => {
     </form>`));
 }
 
+function post(req, res) {
+  const {username, password } = req.body;
+
+  auth
+    .verifyUser(username, password)
+    .then((verification) => {
+        if(verification === false) { 
+            throw new Error();
+
+        } else {
+            return auth.createSession(verification);
+        }
+    })
+     .then((sid) => {
+         res.cookie("sis, sid, auth.COOKIE_OPTION");
+         res.redirect("/");
+
+     })
+     .catch(()=> {
+res.status(401).send(layout(`Error`, `<h1 class="error-message"> SOmething went wrong</h1></h1>`))
+     })
+
+}
 module.exports = {
-    get }
+    get, post }
