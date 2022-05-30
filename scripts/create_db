@@ -1,0 +1,13 @@
+#! /bin/bash
+
+# stop script when an error occurs
+set -e
+
+psql -q -c "CREATE USER fac24_week4_project_user SUPERUSER PASSWORD 'pass123'"
+echo "Created Postgres user 'fac24_week4_project_user'"
+
+psql -q -c "CREATE DATABASE fac24_week4_project WITH OWNER fac24_week4_project_user"
+echo "Created Postgres database 'fac24_week4_project'"
+
+echo "DATABASE_URL='postgres://fac24_week4_project_user:pass123@localhost:5432/fac24_week4_project'" > .env
+echo "Created .env containing DATABASE_URL"
