@@ -1,6 +1,8 @@
 const express = require("express");
 const server = express();
 
+const cookieParser = require("cookie-parser");
+
 const home = require("./routes/home");
 const signUp = require("./routes/signup");
 const posts = require("./routes/posts");
@@ -15,7 +17,6 @@ server.use(staticHandler);
 
 server.get("/", home.get);
 
-
 server.get("/signup", signUp.get);
 server.post("/signup", signUp.post);
 
@@ -26,7 +27,6 @@ server.get("/login", login.get);
 server.post("/login", login.post);
 
 server.post("/logout", logout.post);
-
 
 const PORT = process.env.PORT || 3000;
 
