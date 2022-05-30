@@ -4,8 +4,7 @@ beforeEach(() => {
 
 it("test test :)", () => {
   // Visit the baseURL.
-  // Don't fail on 401, which is our app's default response to users that aren't logged in!
-  cy.visit("/", { failOnStatusCode: false });
+  cy.visit("/");
 });
 
 after(() => {
