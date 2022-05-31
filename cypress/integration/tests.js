@@ -2,10 +2,10 @@ beforeEach(() => {
   cy.task("resetDb");
 });
 
-it("test test :)", () => {
-  // Visit the baseURL.
-  cy.visit("/");
-});
+// it("test test :)", () => {
+//   // Visit the baseURL.
+//   cy.visit("/");
+// });
 
 // Some constants to avoid repetition:
 
@@ -27,51 +27,61 @@ const postAltTextInputSelector = "input[name='alt_text']";
 const postFileInputSelector = "input[name='file']";
 // End of consts
 
-describe("Signing up and logging in", () => {
-  // Add a user, log in as them, make sure the cookie is set, log out, log back in
+// Some reusable test bits:
 
+function signup() {
   it("Submit signup form on /signup route", () => {
     cy.visit("/signup");
     cy.get(usernameInputSelector).type(username);
     cy.get(passwordInputSelector).type(password);
     cy.get("form").submit();
   });
+}
 
-  it("Given session cookie", () => {
-    // https://docs.cypress.io/api/commands/getcookie#Arguments
-    // "When a cookie matching the name could not be found: cy.getCookie() yields null."
-    cy.getCookie(sessionIdCookieName).should("not.eq", null);
-  });
-
-  // How can we check that we've been logged in as the correct user?
-  // (Post something and check the username? Doesn't seem great!)
-
-  it("Redirected to /posts route", () => {
-    cy.url().should("eq", Cypress.config().baseUrl + "posts");
-  });
-
-  it("Logout deletes cookie", () => {
-    cy.visit("/logout");
-    cy.getCookie(sessionIdCookieName).should("eq", null);
-  });
-
+function login() {
   it("Submit login form on /login route", () => {
     cy.visit("/login");
     cy.get(usernameInputSelector).type(username);
     cy.get(passwordInputSelector).type(password);
     cy.get("form").submit();
   });
+}
 
-  // To avoid repetition of these tests, we could use custom commands:
-  // https://docs.cypress.io/api/cypress-api/custom-commands
-  // (Do that after you've established the tests work properly :)
+function sessionCookie() {
+  it("Given session cookie", () => {
+    // https://docs.cypress.io/api/commands/getcookie#Arguments
+    // "When a cookie matching the name could not be found: cy.getCookie() yields null."
+    cy.getCookie(sessionIdCookieName).should("not.eq", null);
+  });
+}
+
+function postsRoute() {
   it("Redirected to /posts route", () => {
     cy.url().should("eq", Cypress.config().baseUrl + "posts");
   });
+}
 
-  it("Given session cookie", () => {
-    cy.getCookie(sessionIdCookieName).should("not.eq", null);
+// End of reusable test bits
+
+describe("Signing up and logging in", () => {
+  // Add a user, log in as them, make sure the cookie is set, log out, log back in
+
+  signup();
+  sessionCookie();
+
+  // How can we check that we've been logged in as the correct user?
+  // (Post something and check the username? Doesn't seem great!)
+
+  postsRoute();
+
+  it("Logout deletes cookie", () => {
+    cy.visit("/logout");
+    cy.getCookie(sessionIdCookieName).should("eq", null);
   });
+
+  login();
+  postsRoute();
+  sessionCookie();
 });
 
 describe("Adding posts", () => {
@@ -82,20 +92,9 @@ describe("Adding posts", () => {
   // Download the image from the post
   // Compare the image with the one that was uploaded
 
-  it("Submit signup form on /signup route", () => {
-    cy.visit("/signup");
-    cy.get(usernameInputSelector).type(username);
-    cy.get(passwordInputSelector).type(password);
-    cy.get("form").submit();
-  });
-
-  it("Given session cookie", () => {
-    cy.getCookie(sessionIdCookieName).should("not.eq", null);
-  });
-
-  it("Redirected to /posts route", () => {
-    cy.url().should("eq", Cypress.config().baseUrl + "posts");
-  });
+  signup();
+  sessionCookie();
+  postsRoute();
 
   it("Submit new post form", () => {
     cy.get(postTitleInputSelector).type(postTitle);
@@ -104,9 +103,7 @@ describe("Adding posts", () => {
     cy.get("form").submit();
   });
 
-  it("Redirected to /posts route", () => {
-    cy.url().should("eq", Cypress.config().baseUrl + "posts");
-  });
+  postsRoute();
 
   // it("Check post was added", () => {
   //   cy.get
@@ -122,6 +119,7 @@ describe("Deleting posts", () => {
   // Add a post (no uploaded needed)
   // Try to delete the first post (made with another user account) - it should fail
   // Try to delete the second post - it should succeed
+  //signup();
 });
 
 after(() => {
