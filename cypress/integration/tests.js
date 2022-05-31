@@ -7,10 +7,12 @@ beforeEach(() => {
 //   cy.visit("/");
 // });
 
+//
 // Some constants to avoid repetition:
+//
 
-const username = "auniqueuserfortesting";
-const password = "aspecialpasswordjustfortesting123";
+const username1 = "user1";
+const password1 = "pass1234";
 
 const postTitle = "A test title";
 const postAltText = "Some alt text";
@@ -25,12 +27,17 @@ const passwordInputSelector = "input[id='password']";
 const postTitleInputSelector = "input[name='title']";
 const postAltTextInputSelector = "input[name='alt_text']";
 const postFileInputSelector = "input[name='file']";
+
+//
 // End of consts
+//
 
+//
 // Some reusable test bits:
+//
 
-function signup() {
-  it("Submit signup form on /signup route", () => {
+function signup(username = username1, password = password1) {
+  it(`Submit signup form on /signup route (username: ${username})`, () => {
     cy.visit("/signup");
     cy.get(usernameInputSelector).type(username);
     cy.get(passwordInputSelector).type(password);
@@ -38,12 +45,19 @@ function signup() {
   });
 }
 
-function login() {
+function login(username = username1, password = password1) {
   it("Submit login form on /login route", () => {
     cy.visit("/login");
     cy.get(usernameInputSelector).type(username);
     cy.get(passwordInputSelector).type(password);
     cy.get("form").submit();
+  });
+}
+
+function logout() {
+  it("Logout deletes cookie", () => {
+    cy.visit("/logout");
+    cy.getCookie(sessionIdCookieName).should("eq", null);
   });
 }
 
@@ -61,7 +75,9 @@ function postsRoute() {
   });
 }
 
+//
 // End of reusable test bits
+//
 
 describe("Signing up and logging in", () => {
   // Add a user, log in as them, make sure the cookie is set, log out, log back in
@@ -73,53 +89,57 @@ describe("Signing up and logging in", () => {
   // (Post something and check the username? Doesn't seem great!)
 
   postsRoute();
-
-  it("Logout deletes cookie", () => {
-    cy.visit("/logout");
-    cy.getCookie(sessionIdCookieName).should("eq", null);
-  });
-
+  logout();
   login();
   postsRoute();
   sessionCookie();
 });
 
-describe("Adding posts", () => {
-  // Sign up (automatically logged in)
-  // Add a post (with upload)
-  // Check the post appears
-  // Stretch:
-  // Download the image from the post
-  // Compare the image with the one that was uploaded
+function addPost() {
+  describe("Adding posts", () => {
+    // Sign up (automatically logged in)
+    // Add a post (with upload)
+    // Check the post appears
+    // Stretch:
+    // Download the image from the post
+    // Compare the image with the one that was uploaded
 
-  signup();
-  sessionCookie();
-  postsRoute();
+    signup();
+    sessionCookie();
+    postsRoute();
 
-  it("Submit new post form", () => {
-    cy.get(postTitleInputSelector).type(postTitle);
-    cy.get(postAltTextInputSelector).type(postAltText);
-    cy.get(postFileInputSelector).selectFile("test_image.jpg");
-    cy.get("form").submit();
+    it("Submit new post form", () => {
+      cy.get(postTitleInputSelector).type(postTitle);
+      cy.get(postAltTextInputSelector).type(postAltText);
+      cy.get(postFileInputSelector).selectFile("test_image.jpg");
+      cy.get("form").submit();
+    });
+
+    postsRoute();
+
+    // it("Check post was added", () => {
+    //   cy.get
+    // });
   });
+}
 
-  postsRoute();
-
-  // it("Check post was added", () => {
-  //   cy.get
-  // });
-});
+addPost();
 
 describe("Deleting posts", () => {
   // Sign up (automatically logged in)
-  // Add a post (no upload needed)
+  // Add a post (no upload needed) - let's reuse above test!
   // Check the post appears
   // Log out
   // Sign up (automatically logged in)
   // Add a post (no uploaded needed)
   // Try to delete the first post (made with another user account) - it should fail
   // Try to delete the second post - it should succeed
-  //signup();
+  signup();
+  addPost();
+  logout();
+  signup("user2"); // A different username :)
+  addPost();
+  //
 });
 
 after(() => {
