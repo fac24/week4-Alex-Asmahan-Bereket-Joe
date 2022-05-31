@@ -22,7 +22,7 @@ server.get("/signup", signUp.get);
 server.post("/signup", signUp.post);
 
 server.get("/posts", posts.get);
-server.post("/posts", posts.post);
+// server.post("/posts", posts.post);
 
 server.get("/login", login.get);
 server.post("/login", login.post);
