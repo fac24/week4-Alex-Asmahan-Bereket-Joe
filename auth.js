@@ -5,7 +5,7 @@ const model = require("./database/model");
 
 const COOKIE_OPTIONS = {
     httpOnly: true,
-    maxAge: 60000,
+    // maxAge: 60000,
     sameSite: "lax",
     signed: true,
 };
