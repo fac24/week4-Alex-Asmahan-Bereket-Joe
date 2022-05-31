@@ -32,10 +32,15 @@ function getAllPosts() {
 };
 
 function createSession(sid, data) {
-    const CREATE_SESSION = `INSERT INTO sessions (sid, data) VALUES ($1, $2)`;
+    const CREATE_SESSION = `INSERT INTO sessions (sid, data) VALUES ($1, $2)
+    RETURNING sid`;
     return db
         .query(CREATE_SESSION, [sid, data])
-        .then((result) => result.rows[0])
+        .then((result) => {
+            console.log(39);
+            console.log(result.rows[0]["sid"]);
+            return result.rows[0]["sid"];
+        })
 };
 
 function getSession(sid) {
