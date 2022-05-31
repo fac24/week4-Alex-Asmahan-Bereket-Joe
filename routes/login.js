@@ -23,7 +23,7 @@ function post(req, res) {
   auth
     .verifyUser(username, password)
     .then((verification) => {
-      console.log(26 + verification);
+      console.log(verification);
       if (verification === false) {
         throw new Error();
       } else {
