@@ -5,7 +5,7 @@ const model = require("./database/model");
 
 const COOKIE_OPTIONS = {
     httpOnly: true,
-    maxAge: 60000,
+    // maxAge: 60000,
     sameSite: "lax",
     signed: true,
 };
@@ -50,7 +50,7 @@ function verifyUser(username, password) {
 
 
 function createUser(username, password) {
-    const sid = crypto.randomBytes(18).toString("base64");
+    // const sid = crypto.randomBytes(18).toString("base64");
     return bcrypt
         .hash(password, 10)
         .then((hash) => model.createUser(username, hash))
