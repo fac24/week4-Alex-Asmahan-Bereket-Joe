@@ -1,5 +1,6 @@
 const express = require("express");
 const server = express();
+const model = require("./database/model");
 
 const cookieParser = require("cookie-parser");
 
@@ -36,17 +37,19 @@ const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));
 
 function checkAuth(req, res, next) {
-  const user = req.session;
-  if (!user) {
-    res.status(401).send(
-      layout(
-        "Please log in",
-        `        <h1>Please log in to view this page</h1>
+  const sid = req.signedCookies.sid;
+  model.getSession(sid).then((result) => {
+    if (result === undefined) {
+      res.status(401).send(
+        layout(
+          "Please log in",
+          `        <h1>Please log in to view this page</h1>
         <a href="/login">Log in</a>
       `
-      )
-    );
-  } else {
-    next();
-  }
+        )
+      );
+    } else {
+      next();
+    }
+  });
 }
