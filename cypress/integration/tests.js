@@ -31,6 +31,9 @@ describe("Signing up and logging in", () => {
     cy.getCookie(sessionIdCookieName).should("not.eq", null);
   });
 
+  // How can we check that we've been logged in as the correct user?
+  // (Post something and check the username? Doesn't seem great!)
+
   it("Redirected to /posts route", () => {
     cy.url().should("eq", Cypress.config().baseUrl + "posts");
   });
