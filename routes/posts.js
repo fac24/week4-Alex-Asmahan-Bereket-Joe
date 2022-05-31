@@ -7,6 +7,7 @@ function get(request, response) {
       layout(
         "Upload Your File",
         /*html*/ `
+    <nav><form method="POST" action="/logout"><button type="submit">Log Out</button></form></nav>
     <h1>Upload Your File</h1>
     <form enctype="multipart/form-data" class="upload-file" id="upload-file" action="/posts" method="POST">
       <label for="title">Title:<span aria-hidden="true">*</span></label>
@@ -26,18 +27,32 @@ function get(request, response) {
   }
 }
 
-function post(request, response) {
-  const { title, alt_text, image } = sanitize(request.body);
-  return model.createPost(title, alt_text, image).then(() => {
-    response.redirect("/posts").catch((error) => {
-      console.error(error);
-      response
-        .status(500)
-        .send(
-          `<h1>Something went wrong. <a href="/">Go back to Home Page</a></h1>`
-        );
-    });
-  });
-}
+// function post(request, response) {
+//   const { title, alt_text, image } = sanitize(request.body);
+//   return model.createPost(title, alt_text, image).then(() => {
+//     response.redirect("/posts").catch((error) => {
+//       console.error(error);
+//       response
+//         .status(500)
+//         .send(
+//           `<h1>Something went wrong. <a href="/">Go back to Home Page</a></h1>`
+//         );
+//     });
+//   });
+// }
 
-module.exports = { get, post };
+// function sanitize(object) {
+//   let sanitized = {};
+//   for (let entry of Object.entries(original_input)) {
+//       let key = entry[0];
+//       let value = entry[1];
+//       sanitized[key] = value.replaceAll("<", "&lt;");
+//       sanitized[key] = value.replaceAll(">", "&gt;");
+//   }
+//   return sanitized;
+// }
+
+module.exports = {
+  get,
+  // post 
+};

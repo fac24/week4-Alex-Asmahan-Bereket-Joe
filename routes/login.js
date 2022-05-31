@@ -1,4 +1,5 @@
 const layout = require("../layout");
+const auth = require("../auth");
 
 function get(req, res) {
   res.send(
@@ -19,10 +20,10 @@ function get(req, res) {
 
 function post(req, res) {
   const { username, password } = req.body;
-
   auth
     .verifyUser(username, password)
     .then((verification) => {
+      console.log(verification);
       if (verification === false) {
         throw new Error();
       } else {
@@ -30,8 +31,10 @@ function post(req, res) {
       }
     })
     .then((sid) => {
-      res.cookie("sid", sid, auth.COOKIE_OPTION);
-      res.redirect("/");
+      console.log(34);
+      console.log(sid);
+      res.cookie("sid", sid, auth.COOKIE_OPTIONS);
+      res.redirect("/posts");
     })
     .catch(() => {
       res
@@ -39,7 +42,7 @@ function post(req, res) {
         .send(
           layout(
             `Error`,
-            `<h1 class="error-message"> Something went wrong</h1></h1>`
+            `<h1 class="error-message"> Something went wrong</h1>`
           )
         );
     });

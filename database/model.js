@@ -1,14 +1,16 @@
 const db = require("./connections");
 
 function createUser(username, password) {
-    const CREATE_USER = `INSERT INTO users (username, password) VALUES ($1, $2)`;
+    const CREATE_USER = `INSERT INTO users (username, password) VALUES ($1, $2) RETURNING id, username, password`;
     return db
         .query(CREATE_USER, [username, password])
-        .then((result) => result.rows[0]);
+        .then((result) => {
+            return result.rows[0]
+        });
 };
 
 function getUser(username) {
-    const GET_USER = `SELECT * FROM users WHERE users.id = $1`;
+    const GET_USER = `SELECT * FROM users WHERE username = $1`;
     return db
         .query(GET_USER, [username])
         .then((result) => result.rows[0]);
@@ -32,10 +34,13 @@ function getAllPosts() {
 };
 
 function createSession(sid, data) {
-    const CREATE_SESSION = `INSERT INTO sessions (sid, data) VALUES ($1, $2)`;
+    const CREATE_SESSION = `INSERT INTO sessions (sid, data) VALUES ($1, $2)
+    RETURNING sid`;
     return db
         .query(CREATE_SESSION, [sid, data])
-        .then((result) => result.rows[0])
+        .then((result) => {
+            return result.rows[0]["sid"];
+        })
 };
 
 function getSession(sid) {
@@ -46,7 +51,7 @@ function getSession(sid) {
 };
 
 function endSession(sid) {
-    const END_SESSION = `DELETE * FROM sessions WHERE sid = $1`;
+    const END_SESSION = `DELETE FROM sessions WHERE sid = $1`;
     return db
         .query(END_SESSION, [sid])
         .then((result) => result.rows[0])
