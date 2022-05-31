@@ -23,7 +23,6 @@ function post(req, res) {
   auth
     .verifyUser(username, password)
     .then((verification) => {
-      console.log(verification);
       if (verification === false) {
         throw new Error();
       } else {
@@ -31,8 +30,6 @@ function post(req, res) {
       }
     })
     .then((sid) => {
-      console.log(34);
-      console.log(sid);
       res.cookie("sid", sid, auth.COOKIE_OPTIONS);
       res.redirect("/posts");
     })
