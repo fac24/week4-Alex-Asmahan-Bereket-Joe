@@ -7,6 +7,11 @@ it("test test :)", () => {
   cy.visit("/");
 });
 
+it("/login route shows login form", () => {
+  cy.visit("/login");
+  cy.get("form");
+});
+
 after(() => {
   cy.task("resetDb");
 });
