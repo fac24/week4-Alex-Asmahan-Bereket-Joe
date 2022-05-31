@@ -32,7 +32,7 @@ function post(req, res) {
     })
     .then((sid) => {
       res.cookie("sid", sid, auth.COOKIE_OPTION);
-      res.redirect("/");
+      res.redirect("/posts");
     })
     .catch(() => {
       res
