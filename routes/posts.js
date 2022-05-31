@@ -42,9 +42,14 @@ function get(request, response) {
 // }
 
 // function sanitize(object) {
-//   console.log(45 + object);
-//   JSON.parse(object);
-
+//   let sanitized = {};
+//   for (let entry of Object.entries(original_input)) {
+//       let key = entry[0];
+//       let value = entry[1];
+//       sanitized[key] = value.replaceAll("<", "&lt;");
+//       sanitized[key] = value.replaceAll(">", "&gt;");
+//   }
+//   return sanitized;
 // }
 
 module.exports = {
