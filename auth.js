@@ -11,8 +11,8 @@ const COOKIE_OPTIONS = {
 };
 
 function verifyUser(username, password) {
-    console.log(14 + username);
-    console.log(15 + password);
+    console.log(14);
+    console.log(username);
     return model.getUser(username)
         .then((user) => {
             console.log(user);
@@ -22,6 +22,7 @@ function verifyUser(username, password) {
             } else {
                 return bcrypt.compare(password, user.password)
                     .then((match) => {
+                        console.log(match);
                         if (match === true) {
                             console.log("Username and password match");
                             return user;
@@ -51,12 +52,16 @@ function createUser(username, password) {
 
 function createSession(user) {
     const sid = crypto.randomBytes(18).toString("base64");
+    console.log(52)
+    console.log(user);
     return model.createSession(sid, { user })
         .then((sid) => sid);
 }
 
 function endSession(user) {
+    console.log(user);
     const sid = req.signedCookies.sid;
+    console.log(60)
     console.log(sid);
     req.clearCookies(sid);
     return model.endSession(sid)
