@@ -37,8 +37,6 @@ function createSession(sid, data) {
     return db
         .query(CREATE_SESSION, [sid, data])
         .then((result) => {
-            console.log(39);
-            console.log(result.rows[0]["sid"]);
             return result.rows[0]["sid"];
         })
 };
@@ -51,7 +49,7 @@ function getSession(sid) {
 };
 
 function endSession(sid) {
-    const END_SESSION = `DELETE * FROM sessions WHERE sid = $1`;
+    const END_SESSION = `DELETE FROM sessions WHERE sid = $1`;
     return db
         .query(END_SESSION, [sid])
         .then((result) => result.rows[0])
