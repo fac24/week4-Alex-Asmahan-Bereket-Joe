@@ -20,13 +20,19 @@ function post(req, res) {
     console.log(username);
     console.log(password);
     return auth.createUser(username, password)
-        .then((result) => {
-            console.log(result)
+        // .then((result) => {
+        //     console.log(24);
+        //     console.log(result);
+        //     auth.createSession(result);
+        // })
+        .then((sid) => {
+            res.cookie("sid", sid, auth.COOKIE_OPTIONS);
         })
-        .then((res.redirect("/posts")))
+        .then(() => res.redirect("/posts"))
         .catch((error) => {
-            console.error(error);
-            return res.send("<h1>Something went wrong with your sign up</h1>");
+            //console.error(error);
+            console.log(error)
+            res.send("<h1>Something went wrong with your sign up</h1>");
         })
 }
 
