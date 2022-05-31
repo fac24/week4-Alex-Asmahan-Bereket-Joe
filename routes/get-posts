@@ -7,7 +7,7 @@ function post(request, response) {
     console.log(image);
     const { title, alt_text } = request.body;
     console.log(request.body)
-    // const imageData = image.buffer;
+    const imageData = image.buffer;
     console.log(request.body);
     // if (!ALLOWED_TYPES.includes(file.mimetype)) {
     //   response.status(400).send("<h1>File upload error</h1><p>Please upload an image file</p>");
@@ -15,7 +15,7 @@ function post(request, response) {
     // if (file.size > MAX_SIZE) {
     //   response.status(400).send("<h1>File upload error</h1><p>Profile picture must be < 5MB</p>")};
     return model.createPost("1", title, alt_text, imageData).then(() => {
-      response.redirect("/all-posts").catch((error) => {
+      response.redirect("/")}).catch((error) => {
         console.error(error);
         response
           .status(500)
@@ -23,7 +23,6 @@ function post(request, response) {
             `<h1>Something went wrong. <a href="/">Go back to Home Page</a></h1>`
           );
       });
-    });
   }
 
   module.exports = { post } ;

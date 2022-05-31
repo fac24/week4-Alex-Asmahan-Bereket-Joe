@@ -26,9 +26,9 @@ server.post("/signup", signUp.post);
 
 server.get("/posts", posts.get);
 
-server.post("/get-posts", getPosts.post);
+server.post("/get-posts", imageUpload.single("image"), getPosts.post);
 
-server.post("/all-posts", imageUpload.single("image"), allPosts.post);
+server.post("/all-posts", allPosts.post);
 
 server.get("/login", login.get);
 server.post("/login", login.post);
