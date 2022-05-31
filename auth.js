@@ -54,13 +54,19 @@ function createUser(username, password) {
     return bcrypt
         .hash(password, 10)
         .then((hash) => model.createUser(username, hash))
-        .then((user) => createSession(user));
+        .then((user) => createSession(user))
+        .catch((error) => {
+            console.error(error);
+        });
 }
 
 function createSession(user) {
     const sid = crypto.randomBytes(18).toString("base64");
     return model.createSession(sid, { user })
-        .then((sid) => sid);
+        .then((sid) => sid)
+        .catch((error) => {
+            console.error(error);
+        });
 }
 
 // function endSession(sid) {
