@@ -1,11 +1,15 @@
 const express = require("express");
 const server = express();
+const multer  = require("multer");
+const imageUpload = multer();
 
 const cookieParser = require("cookie-parser");
 
 const home = require("./routes/home");
 const signUp = require("./routes/signup");
 const posts = require("./routes/posts");
+const getPosts = require("./routes/get-posts");
+const allPosts = require("./routes/all-posts");
 const login = require("./routes/login");
 //const logout = require("./routes/logout");
 
@@ -21,10 +25,14 @@ server.get("/signup", signUp.get);
 server.post("/signup", signUp.post);
 
 server.get("/posts", posts.get);
-server.post("/posts", posts.post);
+
+server.post("/get-posts", getPosts.post);
+
+server.post("/all-posts", imageUpload.single("image"), allPosts.post);
 
 server.get("/login", login.get);
 server.post("/login", login.post);
+
 
 //server.post("/logout", logout.post);
 
