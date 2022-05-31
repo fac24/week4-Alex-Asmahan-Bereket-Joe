@@ -62,6 +62,26 @@ describe("Signing up and logging in", () => {
   });
 });
 
+describe("Adding posts", () => {
+  // Sign up (automatically logged in)
+  // Add a post (with upload)
+  // Check the post appears
+  // Stretch:
+  // Download the image from the post
+  // Compare the image with the one that was uploaded
+});
+
+describe("Deleting posts", () => {
+  // Sign up (automatically logged in)
+  // Add a post (no upload needed)
+  // Check the post appears
+  // Log out
+  // Sign up (automatically logged in)
+  // Add a post (no uploaded needed)
+  // Try to delete the first post (made with another user account) - it should fail
+  // Try to delete the second post - it should succeed
+});
+
 after(() => {
   cy.task("resetDb");
 });
