@@ -17,8 +17,6 @@ function get(req, res) {
 
 function post(req, res) {
     const { username, password } = req.body;
-    console.log(username);
-    console.log(password);
     return auth.createUser(username, password)
         .then((result) => {
             console.log(result)
