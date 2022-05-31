@@ -50,11 +50,15 @@ function verifyUser(username, password) {
 
 
 function createUser(username, password) {
-    const sid = crypto.randomBytes(18).toString("base64");
+    // const sid = crypto.randomBytes(18).toString("base64");
     return bcrypt
         .hash(password, 10)
         .then((hash) => model.createUser(username, hash))
-        .then((user) => createSession(user));
+        .then((user) => {
+            console.log(58);
+            console.log(user);
+            return createSession(user)
+        });
 }
 
 function createSession(user) {
