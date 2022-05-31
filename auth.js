@@ -11,11 +11,8 @@ const COOKIE_OPTIONS = {
 };
 
 function verifyUser(username, password) {
-    console.log(14);
-    console.log(username);
     return model.getUser(username)
         .then((user) => {
-            console.log(user);
             if (user === undefined) {
                 console.error("No such user");
                 return false;
@@ -34,6 +31,16 @@ function verifyUser(username, password) {
             }
 
         })
+        .catch(() => {
+            res
+                .status(401)
+                .send(
+                    layout(
+                        `Error`,
+                        `<h1 class="error-message"> Something went wrong in authentication</h1>`
+                    )
+                );
+        });
 }
 
 // const authLoginPost = server.post("/login", (req, res) => {
@@ -52,20 +59,17 @@ function createUser(username, password) {
 
 function createSession(user) {
     const sid = crypto.randomBytes(18).toString("base64");
-    console.log(52)
-    console.log(user);
     return model.createSession(sid, { user })
         .then((sid) => sid);
 }
 
-function endSession(user) {
-    console.log(user);
-    const sid = req.signedCookies.sid;
-    console.log(60)
-    console.log(sid);
-    req.clearCookies(sid);
-    return model.endSession(sid)
-}
+// function endSession(sid) {
+//     // const sid = req.signedCookies.sid;
+//     // console.log(60)
+//     // console.log(sid);
+//     req.clearCookies(sid);
+//     return model.endSession(sid)
+// }
 
 
 // server.get("/login", (req, res) => {
@@ -85,5 +89,5 @@ module.exports = {
     createUser,
     verifyUser,
     createSession,
-    endSession
+    // endSession
 }
