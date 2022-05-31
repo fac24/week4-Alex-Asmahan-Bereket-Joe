@@ -7,7 +7,7 @@ function get(request, response) {
       layout(
         "Upload Your File",
         /*html*/ `
-    <nav><form method="POST" action="/logout"><button type="submit">Log Out</button></form></nav>
+    <nav><a href="/logout">Log Out</a></nav>
     <h1>Upload Your File</h1>
     <form enctype="multipart/form-data" class="upload-file" id="upload-file" action="/posts" method="POST">
       <label for="title">Title:<span aria-hidden="true">*</span></label>
@@ -54,5 +54,5 @@ function get(request, response) {
 
 module.exports = {
   get,
-  // post 
+  // post
 };
