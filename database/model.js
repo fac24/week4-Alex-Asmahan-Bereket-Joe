@@ -1,10 +1,12 @@
 const db = require("./connections");
 
 function createUser(username, password) {
-    const CREATE_USER = `INSERT INTO users (username, password) VALUES ($1, $2)`;
+    const CREATE_USER = `INSERT INTO users (username, password) VALUES ($1, $2) RETURNING id, username, password`;
     return db
         .query(CREATE_USER, [username, password])
-        .then((result) => result.rows[0]);
+        .then((result) => {
+            return result.rows[0]
+        });
 };
 
 function getUser(username) {
