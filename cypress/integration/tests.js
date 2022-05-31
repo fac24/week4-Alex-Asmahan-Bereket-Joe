@@ -7,16 +7,28 @@ it("test test :)", () => {
   cy.visit("/");
 });
 
+// Some constants to avoid repetition:
+
+const username = "auniqueuserfortesting";
+const password = "aspecialpasswordjustfortesting123";
+
+const postTitle = "A test title";
+const postAltText = "Some alt text";
+
+// If we wanted to be really fancy, we could set these once in another file and
+// reference them throughout the code?
+const sessionIdCookieName = "sid";
+
+const usernameInputSelector = "input[name='username']";
+const passwordInputSelector = "input[id='password']";
+
+const postTitleInputSelector = "input[name='title']";
+const postAltTextInputSelector = "input[name='alt_text']";
+const postFileInputSelector = "input[name='file']";
+// End of consts
+
 describe("Signing up and logging in", () => {
   // Add a user, log in as them, make sure the cookie is set, log out, log back in
-
-  const username = "auniqueuserfortesting";
-  const password = "aspecialpasswordjustfortesting123";
-
-  const usernameInputSelector = "input[name='username']";
-  const passwordInputSelector = "input[id='password']";
-
-  const sessionIdCookieName = "sid";
 
   it("Submit signup form on /signup route", () => {
     cy.visit("/signup");
@@ -69,6 +81,36 @@ describe("Adding posts", () => {
   // Stretch:
   // Download the image from the post
   // Compare the image with the one that was uploaded
+
+  it("Submit signup form on /signup route", () => {
+    cy.visit("/signup");
+    cy.get(usernameInputSelector).type(username);
+    cy.get(passwordInputSelector).type(password);
+    cy.get("form").submit();
+  });
+
+  it("Given session cookie", () => {
+    cy.getCookie(sessionIdCookieName).should("not.eq", null);
+  });
+
+  it("Redirected to /posts route", () => {
+    cy.url().should("eq", Cypress.config().baseUrl + "posts");
+  });
+
+  it("Submit new post form", () => {
+    cy.get(postTitleInputSelector).type(postTitle);
+    cy.get(postAltTextInputSelector).type(postAltText);
+    cy.get(postFileInputSelector).selectFile("test_image.jpg");
+    cy.get("form").submit();
+  });
+
+  it("Redirected to /posts route", () => {
+    cy.url().should("eq", Cypress.config().baseUrl + "posts");
+  });
+
+  // it("Check post was added", () => {
+  //   cy.get
+  // });
 });
 
 describe("Deleting posts", () => {
