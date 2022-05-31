@@ -39,11 +39,7 @@ function verifyUser(username, password) {
 //     console.log(req.signedCookies);
 // })
 
-// const authLogoutGet = server.get("/logout", (req, res) => {
-//     const sid = req.signedCookies.sid;
-//     req.clearCookies(sid);
-//     res.redirect("/");
-// })
+
 
 function createUser(username, password) {
     const sid = crypto.randomBytes(18).toString("base64");
@@ -57,6 +53,13 @@ function createSession(user) {
     const sid = crypto.randomBytes(18).toString("base64");
     return model.createSession(sid, { user })
         .then((sid) => sid);
+}
+
+function endSession(user) {
+    const sid = req.signedCookies.sid;
+    console.log(sid);
+    req.clearCookies(sid);
+    return model.endSession(sid)
 }
 
 
@@ -76,5 +79,6 @@ module.exports = {
     COOKIE_OPTIONS,
     createUser,
     verifyUser,
-    createSession
+    createSession,
+    endSession
 }
