@@ -31,7 +31,9 @@ function post(req, res) {
       }
     })
     .then((sid) => {
-      res.cookie("sid", sid, auth.COOKIE_OPTION);
+      console.log(34);
+      console.log(sid);
+      res.cookie("sid", sid, auth.COOKIE_OPTIONS);
       res.redirect("/posts");
     })
     .catch(() => {
@@ -40,7 +42,7 @@ function post(req, res) {
         .send(
           layout(
             `Error`,
-            `<h1 class="error-message"> Something went wrong</h1></h1>`
+            `<h1 class="error-message"> Something went wrong</h1>`
           )
         );
     });
