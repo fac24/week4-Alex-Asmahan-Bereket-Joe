@@ -11,10 +11,10 @@ function post(request, response) {
   console.log(request.body);
   const imageData = image.buffer;
   console.log(request.body);
-  if (!ALLOWED_TYPES.includes(file.mimetype)) {
+  if (!ALLOWED_TYPES.includes(image.mimetype)) {
     response.status(400).send("<h1>File upload error</h1><p>Please upload an image file</p>");
   }
-  if (file.size > MAX_SIZE) {
+  if (image.size > MAX_SIZE) {
     response.status(400).send("<h1>File upload error</h1><p>Profile picture must be < 5MB</p>")
   };
 
@@ -30,7 +30,7 @@ function post(request, response) {
       return model
         .createPost(user_id, title, alt_text, imageData)
         .then(() => {
-          response.redirect("/");
+          response.redirect("/posts");
         })
         .catch((error) => {
           console.error(error);
