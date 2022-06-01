@@ -33,7 +33,7 @@ server.get("/posts", checkAuth, posts.get);
 server.get("/login", login.get);
 server.post("/login", login.post);
 
-server.post("/logout", logout.get);
+server.get("/logout", logout.get);
 
 const PORT = process.env.PORT || 3000;
 
