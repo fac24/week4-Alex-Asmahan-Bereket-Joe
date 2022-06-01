@@ -24,7 +24,7 @@ function createPost(user_id, title, alt_text, imageData) {
 };
 
 function getAllPosts() {
-    const GET_ALL_POSTS = `SELECT users.username, posts.title, posts.alt_text, posts.image 
+    const GET_ALL_POSTS = `SELECT users.username, posts.id, posts.title, posts.alt_text, posts.image 
     FROM users
     INNER JOIN posts
     ON users.id = posts.user_id`
