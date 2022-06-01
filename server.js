@@ -1,5 +1,7 @@
 const express = require("express");
 const server = express();
+const multer = require("multer");
+const upload = multer();
 const model = require("./database/model");
 
 const cookieParser = require("cookie-parser");
@@ -9,6 +11,7 @@ const layout = require("./layout");
 const home = require("./routes/home");
 const signUp = require("./routes/signup");
 const posts = require("./routes/posts");
+const getPosts = require("./routes/get-posts");
 const login = require("./routes/login");
 const logout = require("./routes/logout");
 
@@ -24,8 +27,8 @@ server.get("/", home.get);
 server.get("/signup", signUp.get);
 server.post("/signup", signUp.post);
 
+server.post("/get-posts", upload.single("image"), getPosts.post);
 server.get("/posts", checkAuth, posts.get);
-// server.post("/posts", posts.post);
 
 server.get("/login", login.get);
 server.post("/login", login.post);
