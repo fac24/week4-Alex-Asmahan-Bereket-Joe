@@ -16,10 +16,10 @@ function getUser(username) {
         .then((result) => result.rows[0]);
 };
 
-function createPost(user_id, title, alt_text, image) {
+function createPost(user_id, title, alt_text, imageData) {
     const CREATE_POST = `INSERT INTO posts (user_id, title, alt_text, image) VALUES ($1, $2, $3, $4)`;
     return db
-        .query(CREATE_POST, [user_id, title, alt_text, image])
+        .query(CREATE_POST, [user_id, title, alt_text, imageData])
         .then((result) => result.rows[0]);
 };
 
