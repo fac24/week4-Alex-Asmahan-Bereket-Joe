@@ -1,11 +1,19 @@
 const model = require("../database/model");
 const layout = require("../layout");
 
-// const MAX_SIZE = 1000 * 1000 * 5; // 5 megabytes
-// const ALLOWED_TYPES = ["image/jpeg", "image/png"]; // only images for now
-
 function get(request, response) {
-  try {
+  let postsHTML = "";
+  model.getAllPosts().then((results) => {
+    results.forEach((result) => {
+      postsHTML += `
+          <div class="post-container">
+          <h2>User: ${result.username}</h2>
+          <h3>Title: ${result.title}</h3>
+          <img src="/images/${result.id}" alt=${result.alt_text} width="300px" height="auto">
+          </div>`
+      return postsHTML;
+    })
+  }).then(() => {
     response.send(
       layout(
         "Upload Your File",
@@ -21,13 +29,15 @@ function get(request, response) {
       <input type="file" id="file" placeholder="Upload File" name="image">
       <button class="link-as-button submit-button" type="Submit" value="Submit" aria-label="Submit Your Post">Submit</button>
     </form>
-    `
+    <section>
+    ${postsHTML}
+    </section>`
       )
-    );
-  } catch (error) {
+    )
+  }).catch((error) => {
     console.error(error);
     response.status(500).send(`<h1>Error</h1>`);
-  }
+  })
 }
 
 // function sanitize(object) {
