@@ -3,6 +3,7 @@ const server = express();
 const multer = require("multer");
 const upload = multer();
 const model = require("./database/model");
+const db = require("./database/connections");
 
 const cookieParser = require("cookie-parser");
 
@@ -29,6 +30,16 @@ server.post("/signup", signUp.post);
 
 server.post("/get-posts", upload.single("image"), getPosts.post);
 server.get("/posts", checkAuth, posts.get);
+server.get("/images/:id", (req, res) => {
+  const id = req.params.id;
+  console.log(id);
+  db.query(`select image from posts where id = $1`, [id]).then((result) => {
+    const bytes = result.rows[0].image;
+    res.type("image/png").send(bytes);
+  });
+});
+
+
 
 server.get("/login", login.get);
 server.post("/login", login.post);
