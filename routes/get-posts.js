@@ -14,7 +14,7 @@ function post(request, response) {
     // }
     // if (file.size > MAX_SIZE) {
     //   response.status(400).send("<h1>File upload error</h1><p>Profile picture must be < 5MB</p>")};
-    return model.createPost("1", title, alt_text, imageData).then(() => {
+    return model.createPost(user_id, title, alt_text, imageData).then(() => {
       response.redirect("/")}).catch((error) => {
         console.error(error);
         response
