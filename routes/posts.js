@@ -1,7 +1,6 @@
 const model = require("../database/model");
 const layout = require("../layout");
 
-
 // const MAX_SIZE = 1000 * 1000 * 5; // 5 megabytes
 // const ALLOWED_TYPES = ["image/jpeg", "image/png"]; // only images for now
 
@@ -11,6 +10,7 @@ function get(request, response) {
       layout(
         "Upload Your File",
         /*html*/ `
+    <nav><form method="POST" action="/logout"><button type="submit">Log Out</button></form></nav>
     <h1>Upload Your File</h1>
     <form enctype="multipart/form-data" class="upload-file" id="upload-file" action="/get-posts" method="POST">
       <label for="title">Title:<span aria-hidden="true">*</span></label>
@@ -30,7 +30,18 @@ function get(request, response) {
   }
 }
 
+// function sanitize(object) {
+//   let sanitized = {};
+//   for (let entry of Object.entries(original_input)) {
+//       let key = entry[0];
+//       let value = entry[1];
+//       sanitized[key] = value.replaceAll("<", "&lt;");
+//       sanitized[key] = value.replaceAll(">", "&gt;");
+//   }
+//   return sanitized;
+// }
 
-
-
-module.exports = { get } ;
+module.exports = {
+  get,
+  // post
+};
