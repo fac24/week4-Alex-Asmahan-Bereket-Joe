@@ -4,14 +4,6 @@
 
 Deployed on Heroku here: http://fac24-week4-project.herokuapp.com/
 
-Visit: http://fac24-week4-project.herokuapp.com/signup
-
-Try logging out, logging back in, visiting http://fac24-week4-project.herokuapp.com/posts
-
-(Posting itself doesn't work yet :)
-
-(Sorry there aren't convenient signup/login links everywhere you need them, yet! Lots of manual address typing.)
-
 ## How to run in your local dev environment
 
 1. Open a terminal on your computer.
