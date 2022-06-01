@@ -1,9 +1,6 @@
 const model = require("../database/model");
 const layout = require("../layout");
 
-const MAX_SIZE = 1000 * 1000 * 5; // 5 megabytes
-const ALLOWED_TYPES = ["image/jpeg", "image/png"]; // only images for now
-
 function get(request, response) {
   let postsHTML = "";
   model.getAllPosts().then((results) => {
